@@ -67,7 +67,7 @@ const PlaylistCard = () => {
     return (
         <div className="w-full text-white flex flex-col lg:flex-row min-h-[85vh] gap-6 md:p-4">
             {/* Sidebar for Featured Playlist */}
-            <aside className="lg:w-3/12 w-full bg-[#a5a781] rounded-lg p-6 flex flex-col items-center">
+            <aside className="xl:w-3/12 lg:w-2/6 w-full bg-[#a5a781] rounded-lg p-6 flex flex-col items-center">
                 <div className="w-full max-w-[312px]">
                     <img
                         src={featuredPlaylist.thumbnail}

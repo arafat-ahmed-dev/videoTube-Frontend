@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useNavigate, Outlet } from "react-router-dom"; // Import useNavigate and Outlet
-import { FaBell } from "react-icons/fa";
+import { FaBell, FaEdit } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 const ChannelProfile = () => {
   const [activeMenuItem, setActiveMenuItem] = useState("Videos");
   const navigate = useNavigate();
+  const authStatus = useSelector((state)=> state.auth.status);
 
   const menuItems = [
     { name: "Videos", to: "videos" },
@@ -39,8 +41,17 @@ const ChannelProfile = () => {
               </div>
             </div>
             <button className="bg-purple-600 max-h-fit max-w-fit text-white px-4 py-2 hover:bg-purple-700 transition duration-150 ease-in-out flex items-center gap-2">
-              <FaBell className="h-5 w-5" />
-              Follow
+              {!authStatus ? (
+                <>
+                  <FaBell className="h-5 w-5" />
+                  Follow
+                </>
+              ) : (
+                <>
+                  <FaEdit className="h-5 w-5" />
+                  Edit
+                </>
+              )}
             </button>
           </div>
         </div>

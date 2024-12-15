@@ -66,21 +66,22 @@ const Playlist = () => {
                     avatar={playlist.avatar}
                 />
             ))} */}
-            {playlists.map((playlist) => (<div>
-                <div className="relative aspect-video overflow-hidden">
+            {playlists.map((playlist , index) => (
+                <div key={index}>
+                <div className="relative aspect-video overflow-hidden" >
                     <img
                         src={playlist.thumbnail}
                         alt={playlist.title}
                         className="object-cover w-full h-full hover:scale-105 transition-transform duration-200"
                     />
                 </div>
-                <div class="relative h-[80px] flex items-center bg-white/10 backdrop-blur-lg p-4 text-white">
-                    <div class="flex justify-between w-full">
-                        <div class="flex flex-col">
-                            <p class="text-lg font-bold">Playlist</p>
-                            <p class="text-sm opacity-80">100K Views • 18 hours ago</p>
+                <div className="relative h-[80px] flex items-center bg-white/10 backdrop-blur-lg p-4 text-white">
+                    <div className="flex justify-between w-full">
+                        <div className="flex flex-col">
+                            <p className="text-lg font-bold">Playlist</p>
+                            <p className="text-sm opacity-80">100K Views • 18 hours ago</p>
                         </div>
-                        <div class="text-right text-sm opacity-80">
+                        <div className="text-right text-sm opacity-80">
                             <p>32 videos</p>
                         </div>
                     </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { FaHome, FaThumbsUp, FaHistory, FaPlayCircle, FaFolderOpen, FaUsers, FaCog, FaQuestionCircle, FaBars, FaTimes, FaSearch } from 'react-icons/fa';
 import AvatarImage from "../components/Material Ui/Avatar";
@@ -20,7 +20,7 @@ const SidebarMenuItem = ({ item, isActive, onClick, loading }) => {
         }`}
       onClick={() => onClick(item)}
     >
-     
+
       <span>{item.name}</span>
     </button>
   );
@@ -30,15 +30,14 @@ function Layout() {
   const [activeMenuItem, setActiveMenuItem] = useState("Home");
   const [searchQuery, setSearchQuery] = useState("");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [loading, setLoading] = useState(false); // Set back to false to render content
+  const [loading, setLoading] = useState(true); // Set back to false to render content
   const authStatus = useSelector((state) => state.auth.status);
-
-
+  const authData = useSelector((state) => state.auth.userData?.user);
   const navigate = useNavigate();
 
   let menuItems;
 
-  if (!authStatus) {
+  if (authStatus) {
     menuItems = [
       { name: "Home", icon: FaHome, to: "/", active: true },
       { name: "Liked Videos", icon: FaThumbsUp, to: "/liked-videos" },
@@ -58,6 +57,16 @@ function Layout() {
       { name: "Support", icon: FaQuestionCircle, to: "/support" },
     ];
   }
+
+  useEffect(() => {
+    // Simulating loading delay
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1500); // Adjust time to your loading scenario
+
+    return () => clearTimeout(timer);
+  }, []);
+  
 
   const handleMenuItemClick = (item) => {
     setActiveMenuItem(item.name);
@@ -134,7 +143,7 @@ function Layout() {
                   <Logo />
                 </Link>
                 <Link to={"/auth/login"}>
-                  <button className="px-4 py-2 bg-yellow-500 text-black dark:text-white rounded-md hover:bg-yellow-600">
+                  <button className="px-4 py-2 bg-[#AE7AFF] text-black dark:text-white rounded-md hover:bg-yellow-600">
                     Login
                   </button>
                 </Link>
@@ -248,12 +257,17 @@ function Layout() {
                   </button>
                 </form>
                 {!authStatus ? <Link to={"/auth/login"} className="ml-4">
-                  <button className="px-4 py-2 hover:bg-gray-500 text-black dark:text-white rounded-md">
+                  <button className="px-4 py-2 bg-[#AE7AFF] hover:bg-gray-500 text-black font-semibold">
+
                     Login
                   </button>
                 </Link>
                   :
-                  <AvatarImage />
+                  <Link to={'/profile'}>
+                    <AvatarImage
+                      src={authData.avatar}
+                    />
+                  </Link>
                 }
               </div>
             )}

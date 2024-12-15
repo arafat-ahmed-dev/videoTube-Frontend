@@ -9,22 +9,23 @@ export default function Protected({ children, authentication = true }) {
     const authStatus = useSelector((state) => state.auth.status);
 
     useEffect(() => {
-        console.log("authStatus:", authStatus); // Log auth status
-        console.log("authentication prop:", authentication); // Log the authentication prop
-
-        if (authentication && authStatus !== authentication) {
+        // If authentication is required but the user is not logged in
+        if (authentication && authStatus !== true) {
             console.log("Redirecting to /auth/login because the user is not authenticated");
             navigate("/auth/login");
-        } else if (!authentication && authStatus === authentication) {
+        }
+        // If authentication is not required but the user is logged in
+        else if (!authentication && authStatus === true) {
             console.log("Redirecting to / because the user is already authenticated");
             navigate("/");
         } else {
-            setLoading(false);
+            setLoading(false); // If no redirect needed, continue rendering the children
         }
     }, [authStatus, navigate, authentication]);
 
     return loading ? <h1>Loading...</h1> : <>{children}</>;
 }
+
 
 // import { useEffect, useState } from "react";
 // import { useNavigate } from "react-router-dom";
